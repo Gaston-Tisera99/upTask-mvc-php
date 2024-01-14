@@ -4,7 +4,9 @@
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Recupera tu acceso UpTask</p>
 
-        <form action="/olvide" class="formulario" method="post">
+        <?php include_once __DIR__ . '/../templates/alertas.php';?>
+
+        <form action="/olvide" class="formulario" method="post" novalidate>
                 <div class="campo">
                     <label for="email">Email</label>
                     <input 

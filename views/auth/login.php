@@ -4,7 +4,9 @@
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Iniciar Sesion</p>
 
-        <form action="/" class="formulario" method="post">
+        <?php include_once __DIR__ . '/../templates/alertas.php';?>
+
+        <form action="/" class="formulario" method="post" novalidate>
                 <div class="campo">
                     <label for="email">Email</label>
                     <input 

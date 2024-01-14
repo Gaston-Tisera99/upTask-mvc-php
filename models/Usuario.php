@@ -16,6 +16,24 @@ class Usuario extends ActiveRecord{
         $this->confirmado = $args['confirmado'] ?? 0;    
     }
 
+
+    //validar el login de usuarios
+    public function validarLogin(){
+        if(!$this->email){
+            self::$alertas['error'][] = 'El email del Usuario es obligatorio';
+        }
+
+        if(!$this->password){
+            self::$alertas['error'][] = 'El password del Usuario no puede ser vacio';
+        }
+
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            self::$alertas['error'][] = 'El Email no valido';
+        }
+        
+        return self::$alertas;
+    }
+
     public function validarCuentasNuevas(){
         if(!$this->nombre){
             self::$alertas['error'][] = 'El nombre del Usuario es obligatorio';
@@ -49,4 +67,31 @@ class Usuario extends ActiveRecord{
     public function crearToken(){
         $this->token = uniqid();
     }
+
+    //valida un email
+    public function validarEmail(){
+        if(!$this->email){
+            self::$alertas['error'][] = 'El Email es obligatorio';
+        }
+
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            self::$alertas['error'][] = 'El Email no valido';
+        }
+        return self::$alertas;
+    }
+
+    public function validarPassword(){
+
+        if(!$this->password){
+            self::$alertas['error'][] = 'El password del Usuario no puede ser vacio';
+        }
+
+        if(strlen($this->password) < 6){
+            self::$alertas['error'][] = 'El password del Usuario no contener menos de 6 caracteres';
+        }
+
+        return self::$alertas;
+    }
+
+    
 }
