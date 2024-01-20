@@ -59,6 +59,7 @@
 
                 mostrarAlerta('El Nombre de la tarea es Obligatorio', 'error', 
                 document.querySelector('.formulario legend'));
+                
                 return;
             }
 
@@ -98,7 +99,7 @@
             
 
             try {
-              const url = 'http://localhost:3000/api/tarea';
+              const url = 'http://localhost:4000/api/tarea';
               const respuesta = await fetch(url, {
                 method: 'POST',
                 body: datos
@@ -107,6 +108,15 @@
               const resultado = await respuesta.json();
               console.log(resultado);
               
+              mostrarAlerta(resultado.mensaje, resultado.tipo, 
+              document.querySelector('.formulario legend'));
+
+              if(resultado.tipo === 'exito'){
+                const modal = document.querySelector('.modal')
+                setTimeout(() => {
+                    modal.remove();
+                }, 3000);
+              }
 
             } catch (error) {
                 console.log(error)

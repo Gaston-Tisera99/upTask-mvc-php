@@ -1,6 +1,8 @@
 <?php
 
 namespace Controllers;
+use Model\Proyecto;
+use Model\Tarea;
 
 Class TareaController{
 
@@ -11,10 +13,30 @@ Class TareaController{
     public static function crear(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            $respuesta = [
-                'proyectoId' => $_POST['proyectoId']
-            ];
+            session_start();
 
+            $proyectoId = $_POST['proyectoId'];
+
+            $proyecto = Proyecto::where('url', $proyectoId);
+
+            if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']){
+                $respuesta = [
+                    'tipo' => 'error',
+                    'mensaje' => 'Hubo un Error al agregar la tarea'
+                ];
+
+                echo json_encode($respuesta);
+                return;
+            }
+
+            $tarea = new Tarea($_POST);
+            $tarea->proyectoId = $proyecto->id;
+            $resultado = $tarea->guardar();
+            $respuesta = [
+                'tipo' => 'exito',
+                'id' => $resultado['id'],
+                'mensaje' => 'Tarea Creada Correctamente'
+            ];
             echo json_encode($respuesta);
         }
     }
