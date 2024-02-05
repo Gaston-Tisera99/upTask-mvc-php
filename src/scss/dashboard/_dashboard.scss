@@ -11,7 +11,7 @@
 
     .principal{
         flex: 1;
-        overflow: scroll;ta
+        overflow: scroll;
     }   
 
     .contenido{
@@ -33,6 +33,13 @@
             text-transform: uppercase;
             font-weight: bold;
             font-size: 1.4rem;
+        }
+    }
+
+    .enlace{
+        color: v.$indigo;
+        &:hover{
+             color: darken(v.$indigo, 20%)
         }
     }
 }
